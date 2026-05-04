@@ -8,7 +8,7 @@ function createAsteroids () {
     }
 }
 function startGame () {
-    info.setLife(9000000000)
+    info.setLife(81)
     scene.setBackgroundImage(assets.image`spaceBackground`)
     discovery = sprites.create(assets.image`discoveryShuttle`, SpriteKind.Player)
     discovery.setPosition(30, 60)
@@ -26,6 +26,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     sprites.destroy(otherSprite, effects.coolRadial, 1000)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.InBackground)
     info.changeLifeBy(-1)
+    scene.cameraShake(12, 1000)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
@@ -34,6 +35,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherS
     scene.setBackgroundImage(assets.image`kellyScreen`)
     game.showLongText("Thanks For Your Help!", DialogLayout.Bottom)
     game.showLongText("I'll Give You My Best Reward!", DialogLayout.Bottom)
+})
+info.onLifeZero(function () {
+    scene.setBackgroundImage(assets.image`kellyScreen0`)
+    game.showLongText("WHAT THE HELL?", DialogLayout.Bottom)
+    game.showLongText("HOW DARE YOU FAIL!", DialogLayout.Bottom)
+    game.showLongText("TAKE THISSSS!!!!", DialogLayout.Bottom)
+    game.gameOver(false)
 })
 let hubble: Sprite = null
 let discovery: Sprite = null
